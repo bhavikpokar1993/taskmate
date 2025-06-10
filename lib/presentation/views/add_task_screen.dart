@@ -57,7 +57,7 @@ class _AddTaskScreenState extends ConsumerState<AddTaskScreen> {
               ),
               SizedBox(height: 10.0,),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Description',border: OutlineInputBorder(
+                decoration: InputDecoration(labelText: 'Description',    alignLabelWithHint: true, border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5), // Rounded corners
                 ),
                   enabledBorder: OutlineInputBorder(
@@ -68,6 +68,8 @@ class _AddTaskScreenState extends ConsumerState<AddTaskScreen> {
                     borderRadius: BorderRadius.circular(16.0),
                     borderSide: BorderSide(color: Colors.purple, width: 2.0), // On focus
                   ),),
+                maxLines: 4,
+                textAlignVertical: TextAlignVertical.top,
                 onChanged: (value) => _description = value,
               ),
               SizedBox(height: 20),

@@ -16,35 +16,37 @@ class HomeScreen extends ConsumerWidget {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,),
       body: ListView(
-        children: taskList
-            .map((task) => TaskTile(
-          title: task.title,
-          isDone: task.isCompleted,
-          onTap: () {
-            // Navigate to Task Detail Screen
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => TaskDetailScreen(
-                  task: task,
-                  onDelete: () {
-                    ref.read(taskListProvider.notifier).deleteTask(task.id);
-                    Navigator.pop(context);
-                  },
-                  onToggleComplete: () {
-                    final updatedTask =
-                    task.copyWith(isCompleted: !task.isCompleted);
-                    ref.read(taskListProvider.notifier).updateTask(updatedTask);
-                    Navigator.pop(context);
-                  },
+        children: taskList.map((task) {
+          return TaskTile(
+            title: task.title,
+            isDone: task.isCompleted,
+            onTap: () {
+              // Navigate to Task Detail Screen
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => TaskDetailScreen(
+                    task: task,
+                    onDelete: () {
+                      ref.read(taskListProvider.notifier).deleteTask(task.id);
+                      Navigator.pop(context);
+                    },
+                    onToggleComplete: () {
+                      final updatedTask = task.copyWith(isCompleted: !task.isCompleted);
+                      ref.read(taskListProvider.notifier).updateTask(updatedTask);
+                      Navigator.pop(context);
+                    },
+                  ),
                 ),
-              ),
-            );
-          },
-          onDelete: () => ref.read(taskListProvider.notifier).deleteTask(task.id),
-        ))
-            .toList(),
-      ),
+              );
+            },
+            onDelete: task.isCompleted
+                ? null
+                : () => ref.read(taskListProvider.notifier).deleteTask(task.id),
+          );
+        }).toList(),
+      )
+      ,
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.push(
             context, MaterialPageRoute(builder: (_) => AddTaskScreen())),

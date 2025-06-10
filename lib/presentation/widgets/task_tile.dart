@@ -4,7 +4,7 @@ class TaskTile extends StatelessWidget {
   final String title;
   final bool isDone;
   final VoidCallback onTap;
-  final VoidCallback onDelete;
+  final VoidCallback? onDelete;
 
   const TaskTile({
     required this.title,
@@ -31,10 +31,12 @@ class TaskTile extends StatelessWidget {
             color: isDone ? Colors.green : null),
         onPressed: onTap,
       ),
-      trailing: IconButton(
-        icon: Icon(Icons.delete, color: Colors.red),
+      trailing: onDelete != null
+          ? IconButton(
+        icon: const Icon(Icons.delete, color: Colors.red),
         onPressed: onDelete,
-      ),
+      )
+          : null,
     );
   }
 }
